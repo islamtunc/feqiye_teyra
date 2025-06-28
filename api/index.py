@@ -96,13 +96,13 @@ class handler(BaseHTTPRequestHandler):
             <div class="container">
                 <div class="ai-icon">🤖</div>
                 <h1>AI Asistan</h1>
-                <p>Merhaba! Ben sizin akıllı asistanınızım.<br>Her türlü sorunuz için buradayım.</p>
+                <p>Selam Aleykum ez Feqi fermo.....<br>Her türlü sorunuz için buradayım.</p>
                 <form class="message-box" id="msgForm">
                     <input class="message-input" id="msgInput" type="text" placeholder="Mesajınızı yazın..." required />
-                    <button class="send-btn" type="submit">Gönder</button>
+                    <button class="send-btn" type="submit">Bişîne</button>
                 </form>
                 <div class="reply-area" id="replyArea"></div>
-                <div class="footer">© 2025 AI Asistan Projesi</div>
+                <div class="footer">© 2025 Yekazad</div>
             </div>
             <script>
                 document.getElementById('msgForm').addEventListener('submit', async function(e) {
