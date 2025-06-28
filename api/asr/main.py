@@ -2,6 +2,8 @@
    Elhamdulillahirabbulalemin
    Esselatu vesselamu ala rasulina Muhammedin ve ala alihi ecmain
    ALLAH U Teala bizleri bu ilimden faydalandırsın.
+   Allah'tan başka ilah yoktur, Muhammed (s.a.v) O'nun Resulüdür.
+   SubhanAllahilazim ve bihamdihi, SubhanAllahil azim.
    Amin.
 """
 
