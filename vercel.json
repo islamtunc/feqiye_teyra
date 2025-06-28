@@ -1,12 +1,8 @@
-
-
-
-
 {
   "redirects": [{ "source": "/", "destination": "/api" }],
   "functions": {
     "api/*.py": {
-        "runtime": "python3.11"
-      }
+      "runtime": "vercel-python@3.1.7"
     }
   }
+}
