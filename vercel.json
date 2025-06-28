@@ -1,10 +1,12 @@
-{
 
-  "_comment": "Elhamdulillahirabbulalemin",
+
+
+
+{
   "redirects": [{ "source": "/", "destination": "/api" }],
   "functions": {
     "api/*.py": {
-      "runtime": "python3.11"
+        "runtime": "python3.11"
+      }
     }
   }
-}
