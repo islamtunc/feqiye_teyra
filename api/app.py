@@ -12,7 +12,7 @@
 FastAPI tabanlı bir backend uygulaması.
 Bu dosya, feqi modülü altında API sunar ve Next.js frontend ile kolayca entegre edilebilir.
 """
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 import shutil
@@ -45,4 +45,12 @@ def asr_endpoint(file: UploadFile = File(...)):
     # result = transcribe(file_path, model, labels)
     result = "(örnek çıktı) Ses başarıyla işlendi."
     return JSONResponse({"transcript": result})
+
+@app.post("/message/")
+async def message_endpoint(request: Request):
+    data = await request.json()
+    user_message = data.get("message", "")
+    # Burada AI asistan cevabını üretebilirsiniz, örnek cevap:
+    response = f"AI Asistan: '{user_message}' mesajınızı aldım!"
+    return JSONResponse({"reply": response})
 

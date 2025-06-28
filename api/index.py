@@ -60,6 +60,36 @@ class handler(BaseHTTPRequestHandler):
                     font-size: 0.9em;
                     color: #888;
                 }
+                .message-box {
+                    display: flex;
+                    margin-top: 20px;
+                }
+                .message-input {
+                    flex: 1;
+                    padding: 10px;
+                    border: 1px solid #b3c6ff;
+                    border-radius: 8px 0 0 8px;
+                    font-size: 1em;
+                    outline: none;
+                }
+                .send-btn {
+                    padding: 10px 18px;
+                    background: #4f8cff;
+                    color: #fff;
+                    border: none;
+                    border-radius: 0 8px 8px 0;
+                    font-size: 1em;
+                    cursor: pointer;
+                    transition: background 0.2s;
+                }
+                .send-btn:hover {
+                    background: #357ae8;
+                }
+                .reply-area {
+                    margin-top: 18px;
+                    color: #2d3a4b;
+                    min-height: 24px;
+                }
             </style>
         </head>
         <body>
@@ -67,8 +97,34 @@ class handler(BaseHTTPRequestHandler):
                 <div class="ai-icon">🤖</div>
                 <h1>AI Asistan</h1>
                 <p>Merhaba! Ben sizin akıllı asistanınızım.<br>Her türlü sorunuz için buradayım.</p>
+                <form class="message-box" id="msgForm">
+                    <input class="message-input" id="msgInput" type="text" placeholder="Mesajınızı yazın..." required />
+                    <button class="send-btn" type="submit">Gönder</button>
+                </form>
+                <div class="reply-area" id="replyArea"></div>
                 <div class="footer">© 2025 AI Asistan Projesi</div>
             </div>
+            <script>
+                document.getElementById('msgForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    const input = document.getElementById('msgInput');
+                    const replyArea = document.getElementById('replyArea');
+                    const message = input.value;
+                    replyArea.textContent = "Gönderiliyor...";
+                    try {
+                        const res = await fetch('/api/message/', {
+                            method: 'POST',
+                            headers: {'Content-Type': 'application/json'},
+                            body: JSON.stringify({message})
+                        });
+                        const data = await res.json();
+                        replyArea.textContent = data.reply;
+                    } catch (err) {
+                        replyArea.textContent = "Bir hata oluştu.";
+                    }
+                    input.value = "";
+                });
+            </script>
         </body>
         </html>
         """
