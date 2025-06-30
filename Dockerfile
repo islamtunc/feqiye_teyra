@@ -25,7 +25,6 @@ RUN pip install --no-cache-dir -r requirements.txt \
 
 # Sadece gerekli dosyaları kopyala (örnek: .py dosyaları ve data/model klasörleri)
 COPY api/ ./api/
-COPY models/ ./models/
 COPY requirements.txt .
 COPY vercel.json .
 COPY README.md .
