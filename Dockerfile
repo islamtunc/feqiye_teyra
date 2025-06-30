@@ -23,11 +23,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt \
     && pip cache purge
 
-# Sadece gerekli dosyaları kopyala (örnek: .py dosyaları ve data/model klasörleri)
-COPY api/ ./api/
+COPY index.py ./index.py
 COPY requirements.txt .
 COPY vercel.json .
 COPY README.md .
 COPY . .
 
-CMD ["uvicorn", "api.app:app", "--host", "0.0.0.0", "--port", "8000"]
+CMD ["python", "index.py"]
