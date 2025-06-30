@@ -130,3 +130,13 @@ class handler(BaseHTTPRequestHandler):
         """
         self.wfile.write(html.encode('utf-8'))
         return
+
+if __name__ == "__main__":
+    from http.server import HTTPServer
+    import os
+
+    port = int(os.environ.get("PORT", 8000))
+    server_address = ("0.0.0.0", port)
+    httpd = HTTPServer(server_address, handler)
+    print(f"Serving on http://0.0.0.0:{port}")
+    httpd.serve_forever()
