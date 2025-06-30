@@ -131,6 +131,24 @@ class handler(BaseHTTPRequestHandler):
         self.wfile.write(html.encode('utf-8'))
         return
 
+    def do_POST(self):
+        if self.path == "/api/message/":
+            content_length = int(self.headers.get('Content-Length', 0))
+            body = self.rfile.read(content_length)
+            import json
+            data = json.loads(body)
+            message = data.get("message", "")
+            # Burada mesajı işleyip cevap üretebilirsiniz
+            reply = f"Mesajınız alındı: {message}"
+            response = {"reply": reply}
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json; charset=utf-8')
+            self.end_headers()
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
+
 if __name__ == "__main__":
     from http.server import HTTPServer
     import os

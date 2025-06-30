@@ -29,4 +29,4 @@ COPY vercel.json .
 COPY README.md .
 COPY . .
 
-CMD ["python", "index.py"]
+CMD ["python", "main.py"]
