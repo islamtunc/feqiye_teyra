@@ -100,7 +100,10 @@ class handler(BaseHTTPRequestHandler):
                 <form class="message-box" id="msgForm">
                     <input class="message-input" id="msgInput" type="text" placeholder="Mesajınızı yazın..." required />
                     <button class="send-btn" type="submit">Bişîne</button>
+                    <button class="send-btn" type="button" id="recordBtn">🎤 Ses Kaydet</button>
+                    <button class="send-btn" type="button" id="sendAudioBtn" disabled>Sesi Gönder</button>
                 </form>
+                <audio id="audioPlayback" controls style="display:none;"></audio>
                 <div class="reply-area" id="replyArea"></div>
                 <div class="footer">© 2025 Yekazad</div>
             </div>
@@ -124,6 +127,50 @@ class handler(BaseHTTPRequestHandler):
                     }
                     input.value = "";
                 });
+
+let mediaRecorder;
+let audioChunks = [];
+let audioBlob = null;
+
+const recordBtn = document.getElementById('recordBtn');
+const sendAudioBtn = document.getElementById('sendAudioBtn');
+const audioPlayback = document.getElementById('audioPlayback');
+
+recordBtn.addEventListener('click', async function() {
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        recordBtn.textContent = "🎤 Ses Kaydet";
+    } else {
+        if (navigator.mediaDevices) {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            mediaRecorder = new MediaRecorder(stream);
+            audioChunks = [];
+            mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+            mediaRecorder.onstop = () => {
+                audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+                audioPlayback.src = URL.createObjectURL(audioBlob);
+                audioPlayback.style.display = "block";
+                sendAudioBtn.disabled = false; // Gönder butonunu aktif et
+            };
+            mediaRecorder.start();
+            recordBtn.textContent = "Durdur";
+            sendAudioBtn.disabled = true; // Kayıt sırasında gönderme kapalı
+        }
+    }
+});
+
+sendAudioBtn.addEventListener('click', async function() {
+    if (!audioBlob) return;
+    const formData = new FormData();
+    formData.append('file', audioBlob, 'recording.wav');
+    const res = await fetch('/asr/', {
+        method: 'POST',
+        body: formData
+    });
+    const data = await res.json();
+    document.getElementById('replyArea').textContent = data.transcript || "Ses çözümlenemedi.";
+    sendAudioBtn.disabled = true; // Gönderildikten sonra tekrar pasif yap
+});
             </script>
         </body>
         </html>

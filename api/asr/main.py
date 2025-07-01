@@ -34,10 +34,13 @@ def main():
     print('Torchaudio version:', torchaudio.__version__)
     print('ASR project setup is ready!')
     # Example usage
-    # labels = ['a', 'b', 'c', ..., ' ']  # Define your label set
-    # model = SimpleCTCModel(input_dim=80, hidden_dim=128, output_dim=len(labels))
-    # text = transcribe('path/to/audio.wav', model, labels)
-    # print('Transcription:', text)
+    labels = [
+        'a', 'b', 'c', 'ç', 'd', 'e', 'ê', 'f', 'g', 'h', 'i', 'î', 'j', 'k', 'l', 'm',
+        'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z', '', 'ع'
+    ]  # Kürtçe harfler, boşluk ve Arapça 'ayn' harfi
+    model = SimpleCTCModel(input_dim=80, hidden_dim=128, output_dim=len(labels))
+    text = transcribe('path/to/audio.wav', model, labels)
+    print('Transcription:', text)
 
 if __name__ == '__main__':
     main()

@@ -6,6 +6,8 @@
 """
 import librosa
 import numpy as np
+import glob
+import os
 
 def preprocess_audio(file_path, sample_rate=16000, n_mels=80):
     """
@@ -39,7 +41,6 @@ def preprocess_files(file_list, sample_rate=16000, n_mels=80, save_dir=None):
     Returns:
         dict: {file_path: features}
     """
-    import os
     features_dict = {}
     for file_path in file_list:
         features = preprocess_audio(file_path, sample_rate, n_mels)
@@ -49,3 +50,16 @@ def preprocess_files(file_list, sample_rate=16000, n_mels=80, save_dir=None):
             base = os.path.splitext(os.path.basename(file_path))[0]
             np.save(os.path.join(save_dir, base + '.npy'), features)
     return features_dict
+
+# Ses dosyalarının bulunduğu klasör
+AUDIO_DIR = "../data/mmmdeng"
+# Özelliklerin kaydedileceği klasör
+FEATURES_DIR = "../data/mmmfeatures"
+
+# Tüm .wav dosyalarını bul
+audio_files = glob.glob(os.path.join(AUDIO_DIR, "*.wav"))
+
+# Özellikleri çıkar ve kaydet
+features = preprocess_files(audio_files, sample_rate=16000, n_mels=80, save_dir=FEATURES_DIR)
+
+print(f"{len(features)} dosya işlendi ve özellikler {FEATURES_DIR} klasörüne kaydedildi.")

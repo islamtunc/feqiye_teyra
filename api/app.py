@@ -14,9 +14,12 @@ Bu dosya, feqi modülü altında API sunar ve Next.js frontend ile kolayca enteg
 """
 from fastapi import FastAPI, UploadFile, File, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
 import shutil
 import os
+from speech_to_text.speech_to_text import transcribe_audio  # örnek import
+from nlp.llm import get_ai_reply  # örnek import
+from speech_to_text.text_to_speech import synthesize_speech  # örnek import
 
 app = FastAPI()
 
@@ -41,16 +44,20 @@ def asr_endpoint(file: UploadFile = File(...)):
     file_path = os.path.join(UPLOAD_DIR, file.filename)
     with open(file_path, "wb") as f:
         shutil.copyfileobj(file.file, f)
-    # Burada ASR modelini çağırıp sonucu alın (örnek çıktı):
-    # result = transcribe(file_path, model, labels)
-    result = "(örnek çıktı) Ses başarıyla işlendi."
+    result = transcribe_audio(file_path)  # kendi fonksiyonunuz
     return JSONResponse({"transcript": result})
 
 @app.post("/message/")
 async def message_endpoint(request: Request):
     data = await request.json()
     user_message = data.get("message", "")
-    # Burada AI asistan cevabını üretebilirsiniz, örnek cevap:
-    response = f"AI Asistan: '{user_message}' mesajınızı aldım!"
+    response = get_ai_reply(user_message)  # kendi fonksiyonunuz
     return JSONResponse({"reply": response})
+
+@app.post("/speak/")
+async def speak_endpoint(request: Request):
+    data = await request.json()
+    text = data.get("text", "")
+    audio_path = synthesize_speech(text)  # kendi fonksiyonunuz
+    return FileResponse(audio_path, media_type="audio/wav")
 
