@@ -10,7 +10,7 @@ Bu modül, mevcut ASR projenizle uyumlu şekilde ses dosyasını metne çevirir.
 """
 import torch
 from models.model import SimpleCTCModel, ctc_decode
-from asr.preprocess import preprocess_audio
+from api.asr.preprocess import preprocess_audio
 
 class SpeechToText:
     def __init__(self, model, labels, device='cpu'):

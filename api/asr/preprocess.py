@@ -2,6 +2,10 @@
    Elhamdulillahirabbulalemin
    Esselatu vesselamu ala rasulina Muhammedin ve ala alihi ecmain
    ALLAH U Teala bizleri bu ilimden faydalandırsın.
+   La ilahe illallah, Muhammedun Resulullah.
+   SubhanAllahilazim ve bihamdihi, SubhanAllahil azim.
+   Allah'tan başka ilah yoktur, Muhammed (s.a.v) O'nun Resulüdür.
+   Allah u Ekber, Allah u Ekber, La ilahe illallah, Allah u Ekber, Allahu Ekber, ve lillahi'l-hamd.
    Amin.
 """
 import librosa
@@ -52,9 +56,9 @@ def preprocess_files(file_list, sample_rate=16000, n_mels=80, save_dir=None):
     return features_dict
 
 # Ses dosyalarının bulunduğu klasör
-AUDIO_DIR = "../data/mmmdeng"
+AUDIO_DIR = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\mmmdeng"
 # Özelliklerin kaydedileceği klasör
-FEATURES_DIR = "../data/mmmfeatures"
+FEATURES_DIR = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\mmmfeature"
 
 # Tüm .wav dosyalarını bul
 audio_files = glob.glob(os.path.join(AUDIO_DIR, "*.wav"))
@@ -63,3 +67,4 @@ audio_files = glob.glob(os.path.join(AUDIO_DIR, "*.wav"))
 features = preprocess_files(audio_files, sample_rate=16000, n_mels=80, save_dir=FEATURES_DIR)
 
 print(f"{len(features)} dosya işlendi ve özellikler {FEATURES_DIR} klasörüne kaydedildi.")
+print(os.getcwd())

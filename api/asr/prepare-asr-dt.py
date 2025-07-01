@@ -6,40 +6,47 @@
    SubhanAllahilazim ve bihamdihi, SubhanAllahil azim.
    Amin.
 """
-
 import os
-import glob
 import csv
-from preprocess import preprocess_audio
+from api.asr.preprocess import preprocess_audio
 import numpy as np
 
-# 1. Ses dosyalarının ve transkriptlerin olduğu klasörleri belirt
-AUDIO_DIR = "../../data"  # Ses dosyalarının olduğu klasör
-TRANSCRIPT_PATH = "../../data/transcripts.txt"  # Her satır: dosya_adı.wav|transkript
-FEATURES_DIR = "../../features"  # Mel spectrogramların kaydedileceği klasör
-CSV_OUT = "../../train_manifest.csv"  # Model eğitimi için CSV
+# Klasör ve dosya yolları
+AUDIO_DIR = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\mmmdeng"
+TRANSCRIPT_PATH = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\transcripts.txt"
+FEATURES_DIR = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\mmmfeature"
+CSV_OUT = r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\train_manifest.csv"
 
 os.makedirs(FEATURES_DIR, exist_ok=True)
 
-# 2. Transkriptleri oku
+# 1. Transkriptleri oku ve tekrarsız bir sözlük oluştur
 transcript_dict = {}
 with open(TRANSCRIPT_PATH, "r", encoding="utf-8") as f:
     for line in f:
+        if "|" not in line:
+            continue
         fname, text = line.strip().split("|", 1)
-        transcript_dict[fname] = text
+        fname = fname.strip()
+        if fname not in transcript_dict:  # Tekrarlı dosya adını atla
+            transcript_dict[fname] = text.strip()
 
-# 3. Ses dosyalarını işle ve CSV oluştur
+# 2. Ses dosyalarını işle, Mel Spectrogram çıkar, .npy olarak kaydet ve manifest oluştur
 with open(CSV_OUT, "w", encoding="utf-8", newline="") as csvfile:
     writer = csv.writer(csvfile)
     writer.writerow(["feature_path", "transcript"])
+    seen = set()
     for fname in os.listdir(AUDIO_DIR):
         if not fname.endswith(".wav"):
             continue
-        audio_path = os.path.join(AUDIO_DIR, fname)
+        fname_clean = fname.strip()
+        if fname_clean in seen:
+            continue
+        seen.add(fname_clean)
+        audio_path = os.path.join(AUDIO_DIR, fname_clean)
         mel = preprocess_audio(audio_path)
-        feature_path = os.path.join(FEATURES_DIR, fname.replace(".wav", ".npy"))
+        feature_path = os.path.join(FEATURES_DIR, fname_clean.replace(".wav", ".npy"))
         np.save(feature_path, mel)
-        transcript = transcript_dict.get(fname, "")
+        transcript = transcript_dict.get(fname_clean, "")
         writer.writerow([feature_path, transcript])
 
-print("ASR veri hazırlama tamamlandı!")
+print("Tüm ön işleme ve manifest oluşturma işlemi tamamlandı! (Tekrarsız)")

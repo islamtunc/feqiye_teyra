@@ -9,8 +9,8 @@
 
 import torch
 import torchaudio
-from models.model import SimpleCTCModel, ctc_decode
-from preprocess import preprocess_audio
+from api.models.model import SimpleCTCModel, ctc_decode
+from api.asr.preprocess import preprocess_audio
 
 def transcribe(audio_path, model, labels, device='cpu'):
     """
@@ -39,7 +39,7 @@ def main():
         'n', 'o', 'p', 'q', 'r', 's', 'ş', 't', 'u', 'û', 'v', 'w', 'x', 'y', 'z', '', 'ع'
     ]  # Kürtçe harfler, boşluk ve Arapça 'ayn' harfi
     model = SimpleCTCModel(input_dim=80, hidden_dim=128, output_dim=len(labels))
-    text = transcribe('path/to/audio.wav', model, labels)
+    text = transcribe(r"C:\Users\admin\Documents\GitHub\feqiye_teyra\api\data\mmmdeng\1.wav", model, labels)
     print('Transcription:', text)
 
 if __name__ == '__main__':
