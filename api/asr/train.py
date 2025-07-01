@@ -1,8 +1,10 @@
 """Bismillahirrahmanirahim
    Elhamdulillahirabbulalemin
    Esselatu vesselamu ala rasulina Muhammedin ve ala alihi ecmain
-   ALLAH U Teala bizleri bu ilimden faydalandırsın.
-   Amin.
+   ALLAH U Teala bizleri bu ilimden faydalandırsın.Amin.
+   Allah'tan başka ilah yoktur, Muhammed (s.a.v) O'nun Resulüdür.
+   SubhanAllahilazim ve bihamdihi, SubhanAllahil azim.
+   Allah u Ekber, Allah u Ekber, La ilahe illallah, Allah u Ekber, Allahu Ekber, ve lillahi'l-hamd. 
 """
 
 import os
@@ -14,11 +16,12 @@ import pandas as pd
 import numpy as np
 
 # --- Config ---
-MANIFEST_PATH = "../data/train_manifest.csv"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MANIFEST_PATH = os.path.join(BASE_DIR, "../data/train_manifest.csv")
 BATCH_SIZE = 16
 EPOCHS = 10
 LEARNING_RATE = 1e-3
-MODEL_SAVE_PATH = "../models/asr_model.pt"
+MODEL_SAVE_PATH = os.path.join(BASE_DIR, "../models/asr_model.pt")
 DEVICE = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
 # --- Dataset ---
