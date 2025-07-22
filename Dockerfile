@@ -6,7 +6,6 @@
 # La havle ve la kuvvete illa billahil aliyyil azim
 # La ilahe illallahu vahdehu la sharika lehu, lehul mulku ve lehul hamdu ve huve ala kulli şey'in kadir
 
-
 FROM python:3.11-slim
 
 # Gerekli sistem paketlerini yükle ve temizle
@@ -20,13 +19,9 @@ RUN apt-get purge -y --auto-remove build-essential && \
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt \
-    && pip cache purge
+RUN pip install --no-cache-dir -r requirements.txt && pip cache purge
 
-COPY index.py ./index.py
-COPY requirements.txt .
-COPY vercel.json .
-COPY README.md .
 COPY . .
 
-CMD ["python", "main.py"]
+# main.py yerine index.py çalıştırılıyor mu kontrol et
+CMD ["python", "index.py"]
