@@ -24,4 +24,4 @@ RUN pip install --no-cache-dir -r requirements.txt && pip cache purge
 COPY . .
 
 # main.py yerine index.py çalıştırılıyor mu kontrol et
-CMD ["python", "index.py"]
+CMD ["python", "main.py"]
