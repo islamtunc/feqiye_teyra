@@ -24,7 +24,7 @@ class handler(BaseHTTPRequestHandler):
         <html lang="tr">
         <head>
             <meta charset="UTF-8">
-            <title>AI Asistan</title>
+            <title>Feqîyê Teyran</title>
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <style>
                 body {
@@ -99,8 +99,8 @@ class handler(BaseHTTPRequestHandler):
         <body>
             <div class="container">
                 <div class="ai-icon">🤖</div>
-                <h1>AI Asistan</h1>
-                <p>Selam Aleykum ez Feqi fermo.....<br>Her türlü sorunuz için buradayım.</p>
+                <h1>Feqîyê Teyran</h1>
+                <p>Selam Aleykum ez Feqi fermo.....<br>Kurdish AI Asisstant</p>
                 <form class="message-box" id="msgForm">
                     <input class="message-input" id="msgInput" type="text" placeholder="Mesajınızı yazın..." required />
                     <button class="send-btn" type="submit">Bişîne</button>
@@ -119,7 +119,7 @@ class handler(BaseHTTPRequestHandler):
                     const message = input.value;
                     replyArea.textContent = "Gönderiliyor...";
                     try {
-                        const res = await fetch('/api/message/', {
+                        const res = await fetch('/api/chat/', {
                             method: 'POST',
                             headers: {'Content-Type': 'application/json'},
                             body: JSON.stringify({message})
@@ -190,7 +190,7 @@ sendAudioBtn.addEventListener('click', async function() {
             data = json.loads(body)
             message = data.get("message", "")
             # Burada mesajı işleyip cevap üretebilirsiniz
-            reply = f"Mesajınız alındı: {message}"
+            reply = f"Pirsa we: {message}"
             response = {"reply": reply}
             self.send_response(200)
             self.send_header('Content-type', 'application/json; charset=utf-8')
