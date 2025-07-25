@@ -103,7 +103,6 @@ class handler(BaseHTTPRequestHandler):
                 <p>Selam Aleykum ez Feqi fermo.....<br>Kurdish AI Asisstant</p>
                 <form class="message-box" id="msgForm">
                     <input class="message-input" id="msgInput" type="text" placeholder="Mesajınızı yazın..." required />
-                    <button class="send-btn" type="submit">Bişîne</button>
                     <button class="send-btn" type="button" id="recordBtn">🎤 Ses Kaydet</button>
                     <button class="send-btn" type="button" id="sendAudioBtn" disabled>Sesi Gönder</button>
                 </form>
