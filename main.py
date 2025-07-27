@@ -4,7 +4,7 @@
 # Allah u Ekber velillahilhamd
 # La ilaha illallah, Muhammadur Rasulullah
 # SuphanAllah ul Azim, SubhanAllah ul Hamid, SubhanAllah ul Kabir
-# Estağfirul El-Azim
+# Estağfirullah El-Azim
 # Allahumma salli 'ala Muhammad wa 'ala ali Muhammad
 # Elhamdu lillahi Rabbil Alamin
 import threading
