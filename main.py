@@ -181,13 +181,12 @@ sendAudioBtn.addEventListener('click', async function() {
         return
 
     def do_POST(self):
-        if self.path == "/api/message/":
+        if self.path in ["/api/message/", "/api/chat/"]:
             content_length = int(self.headers.get('Content-Length', 0))
             body = self.rfile.read(content_length)
             import json
             data = json.loads(body)
             message = data.get("message", "")
-            # Burada mesajı işleyip cevap üretebilirsiniz
             reply = f"Pirsa we: {message}"
             response = {"reply": reply}
             self.send_response(200)
